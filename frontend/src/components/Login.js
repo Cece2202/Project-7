@@ -1,22 +1,26 @@
-import axios from "axios"
-import { useState } from "react"
+import React, { useState } from "react";
+import axios from "axios";
+import "../styles/Login.css";
 
 function Login() {
-    const handleSubmit = e => {
-        // Prevent the default submit and page reload
-        e.preventDefault()
-
-        // Handle validations
-        axios
-            .post("https://example.con/login", { email, password })
-            .then(response => {
-                console.log(response)
-                // Handle response
-            })
-    }
 
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
+    const [message, setMessage] = useState();
+
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await axios.post('http://localhost:3000/api/login',);
+          setMessage(response.data.message);
+        } catch (error) {
+          setMessage(error.response?.data?.error || 'Invalid login credentials. Please try again.');
+        }
+      };
+
+
+
     return (
         <div>
             <form action="" id="login" method="post" onSubmit={handleSubmit}>
@@ -45,6 +49,7 @@ function Login() {
                     <input type="submit" value="Login" />
                 </p>
             </form>
+            {message && <p>{"Invalid login credentials. Please try again."}</p>}
         </div>
     )
 }
