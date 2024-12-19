@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
+  //TODO add userId and array for reads
   Post.init({
     title: {
       type: DataTypes.STRING,
