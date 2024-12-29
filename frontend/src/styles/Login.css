@@ -2,8 +2,8 @@
   /* Container for centering the login form */
   .form-container {
     max-width: 400px;
-    margin: 80px auto;
-    padding: 30px;
+    width: 90%; /* Prevent excessive stretching */
+    padding: 20px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
@@ -11,7 +11,7 @@
   
   /* Title styling */
   h1 {
-    font-size: 32px;
+    font-size: 28px;
     text-align: center;
     color: #444;
     margin-bottom: 20px;

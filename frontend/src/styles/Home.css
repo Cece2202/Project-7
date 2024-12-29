@@ -71,6 +71,12 @@
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
   }
+
+  /* .posts-grid p {
+    font-size: 2rem;
+    color: #333;
+    text-align: center;
+  } */
   
   .post-card {
     background-color: #f9f9f9;
