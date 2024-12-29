@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import API from "../api";
 import "../styles/Forum.css"; // Import the CSS file
 
-console.log(API); // Should print the axios instance or module content
+console.log(API);
 
 const Forum = () => {
   const [posts, setPosts] = useState([]);
@@ -14,7 +14,7 @@ const Forum = () => {
 
   const fetchPosts = async () => {
     try {
-      const { data } = await API.get("/posts/trending");
+      const { data } = await API.get("http://localhost:3000/posts");
       setPosts(data);
     } catch (err) {
       console.error(err);
