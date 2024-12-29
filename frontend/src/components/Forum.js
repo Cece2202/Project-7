@@ -6,7 +6,10 @@ console.log(API);
 
 const Forum = () => {
   const [posts, setPosts] = useState([]);
+  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [media, setMedia] = useState(null);
+
 
   useEffect(() => {
     fetchPosts();
@@ -23,9 +26,17 @@ const Forum = () => {
 
   const handleCreatePost = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("content", content);
+    if (media) formData.append("media", media);
+
     try {
-      await API.post("/posts", { content });
+      await API.post("http://localhost:3000/posts", { content });
+      setTitle("");
       setContent("");
+      setMedia(null);
       fetchPosts();
     } catch (err) {
       console.error(err);
@@ -34,28 +45,34 @@ const Forum = () => {
 
   return (
     <div className="forum-container">
-      <h2 className="forum-title">Forum</h2>
+      <h2>Forum</h2>
       <form onSubmit={handleCreatePost} className="post-form">
-        <div className="form-group">
-          <textarea
-            className="form-control"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            placeholder="Share something..."
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-post">
-          Post
-        </button>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title"
+          required
+        />
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder="Content"
+          required
+        />
+        <input
+          type="file"
+          onChange={(e) => setMedia(e.target.files[0])}
+        />
+        <button type="submit">Create Post</button>
       </form>
-      <div className="post-list mt-4">
+      <div className="post-list">
         {posts.map((post) => (
-          <div key={post._id} className="post-card mb-3">
-            <div className="post-card-body">
-              <p>{post.content}</p>
-              <small>By: {post.user?.name}</small>
-            </div>
+          <div key={post._id} className="post-card">
+            <h3>{post.title}</h3>
+            <p>{post.content}</p>
+            {post.mediaUrl && <img src={post.mediaUrl} alt="Post media" />}
+            <small>By: {post.user?.name}</small>
           </div>
         ))}
       </div>
