@@ -5,7 +5,7 @@
     position: sticky;
     top: 0;
     /* z-index: 1000; */
-    width: 1800px;
+    width: 100%;
   }
   
   .container {
@@ -23,7 +23,7 @@
   }
   
   .navbar-brand:hover {
-    color: #3498db;
+    color: red;
   }
   
   .navbar-nav {
@@ -34,7 +34,7 @@
   
   .nav-link {
     color: #fff;
-    font-size: 1.1rem;
+    font-size: 14px;
     text-decoration: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -42,13 +42,13 @@
   }
   
   .nav-link:hover {
-    background-color: #3498db;
+    background-color: #e74c3c;
     color: white;
   }
   
   .logout-btn {
     background-color: #e74c3c;
-    color: white;
+    color: #e74c3c;
     font-size: 1rem;
     border: none;
     padding: 8px 20px;
