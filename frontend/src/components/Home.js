@@ -26,6 +26,7 @@ const Home = () => {
     }
   };
 
+
   return (
     <div className="home-container">
       <header className="home-header">
@@ -43,9 +44,14 @@ const Home = () => {
           {posts.length > 0 ? (
             posts.map((post) => (
               <div key={post._id} className="post-card">
-                {post.media && <img src={post.media} alt="Post" className="post-image" />}
-                <p className="post-content">{post.content}</p>
+                <h3>{post.title}</h3>
                 <small className="post-author">By: {post.user?.name}</small>
+                <p className="post-content">{post.content}</p>
+                {post.media && <img src={post.media} alt="Post" className="post-image" />}
+                <Link to={`/posts/${post.id}`} className="post-link">
+                    
+                    <p>Read More...</p>
+                </Link>
               </div>
             ))
           ) : (
