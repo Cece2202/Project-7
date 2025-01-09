@@ -29,7 +29,7 @@
   .navbar-nav {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 1px;
   }
   
   .nav-link {
@@ -42,11 +42,11 @@
   }
   
   .nav-link:hover {
-    background-color: #e74c3c;
-    color: white;
+    background-color: ;
+    color: #e74c3c;
   }
   
-  .logout-btn {
+  .logout-btn, .home-btn, .forum-btn {
     background-color: #e74c3c;
     color: #e74c3c;
     font-size: 1rem;
@@ -64,11 +64,6 @@
   
   /* Responsive Design */
   @media (min-width: 768px) {
-    .navbar-nav {
-      display: block;
-      text-align: center;
-      /* width: 500px; */
-    }
   
     .nav-link {
       margin: 10px 0;
