@@ -20,12 +20,20 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     content: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(1000),
       allowNull: false,
     },
     mediaUrl: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    reads: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER), // Array of user IDs
+      defaultValue: [],
     },
   }, {
     sequelize,
