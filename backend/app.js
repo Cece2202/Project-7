@@ -4,7 +4,7 @@ const path = require('path');
 // const cors = require('cors'); // Import cors middleware
 
 
-// const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/user')
 // const sauceRoutes = require('./routes/sauce');
 
 
@@ -42,10 +42,10 @@ app.use((req, res, next) => {
 //   });
 
 // Static route to serve uploaded images
-// app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/media', express.static(path.join(__dirname, 'media')));
 
 // Routes
-// app.use('/api/auth', userRoutes);
+app.use('/api/auth', userRoutes);
 // app.use('/api/sauces', sauceRoutes);
 
 module.exports = app;

@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     userId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     reads: {
       type: DataTypes.ARRAY(DataTypes.INTEGER), // Array of user IDs

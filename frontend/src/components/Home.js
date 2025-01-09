@@ -33,7 +33,7 @@ const Home = () => {
         <h1>Welcome</h1>
         <p>The fun place for your team! Share, laugh, and connect.</p>
         <div className="auth-buttons">
-          <Link to="/forum" className="btn btn-primary">Forum</Link>
+          <Link to="/forum" className="btn btn-primary">Create Post</Link>
           {/* <Link to="/signup" className="btn btn-primary">Signup</Link> */}
         </div>
       </header>
@@ -46,7 +46,7 @@ const Home = () => {
               <div key={post._id} className="post-card">
                 <h3>{post.title}</h3>
                 <small className="post-author">By: {post.user?.name}</small>
-                <p className="post-content">{post.content}</p>
+                <p className="post-content">{post.content.substring(0, 100)}...</p>
                 {post.media && <img src={post.media} alt="Post" className="post-image" />}
                 <Link to={`/posts/${post.id}`} className="post-link">
                     

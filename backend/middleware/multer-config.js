@@ -3,12 +3,15 @@ const multer = require('multer');
 const MIME_TYPES = {
     'image/jpg': 'jpg',
     'image/jpeg': 'jpg',
-    'image/png': 'png'
+    'image/png': 'png',
+    'audio/mpeg': 'mp3',
+    'video/mp4': 'mp4'
+
 };
 
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, 'images'); // Ensure that this folder exists in your project root
+        callback(null, 'media'); // Ensure that this folder exists in your project root
     },
     filename: (req, file, callback) => {
         const name = file.originalname.split(' ').join('_');
