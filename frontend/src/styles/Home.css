@@ -91,6 +91,20 @@
     transform: scale(1.05);
   }
   
+  .post-card.reads {
+    background-color: red; /* Light blue background for read posts */
+  }
+  
+  .read-badge {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 10px;
+    font-size: 0.85rem;
+    color: #fff;
+    background-color: #e74c3c; /* Primary color */
+    border-radius: 5px;
+  }
+  
   .post-image {
     width: 100%;
     max-height: 250px;
