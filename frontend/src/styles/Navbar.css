@@ -1,72 +1,71 @@
-/* Header.css */
 .navbar {
-    background-color: #333;
-    padding: 10px 20px;
-    position: sticky;
-    top: 0;
-    /* z-index: 1000; */
-    width: 100%;
-  }
-  
+  background-color: #333;
+  padding: 10px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+}
+
+.navbar-logo {
+  height: 60px;
+  width: auto;
+  margin-right: 10px;
+}
+
+.brand-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #e74c3c;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.navbar-nav button:hover {
+  background-color: #c0392b;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
   .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 15px;
   }
-  
-  .navbar-brand {
-    font-size: 1.8rem;
-    color: #fff;
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s;
-  }
-  
-  .navbar-brand:hover {
-    color: red;
-  }
-  
+
   .navbar-nav {
-    display: flex;
-    align-items: center;
-    gap: 1px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
-  
-  .nav-link {
-    color: #fff;
-    font-size: 14px;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s;
-  }
-  
-  .nav-link:hover {
-    background-color: ;
-    color: #e74c3c;
-  }
-  
-  .logout-btn, .home-btn, .forum-btn {
-    background-color: #e74c3c;
-    color: #e74c3c;
-    font-size: 1rem;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-  }
-  
-  .logout-btn:hover {
-    background-color: #c0392b;
-    transform: scale(1.05);
-  }
-  
-  /* Responsive Design */
-  @media (min-width: 768px) {
-  
-    .nav-link {
-      margin: 10px 0;
-    }
-  }
-  
+}
