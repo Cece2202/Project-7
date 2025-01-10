@@ -11,10 +11,12 @@ form {
   padding: 0;
   box-sizing: border-box;
   font-family: 'Arial', sans-serif;
-  color: white;
   color: #333;
 }
 
+a{
+  text-decoration: none;
+}
 body {
   background-color: #f4f4f4;
   font-size: 16px;
