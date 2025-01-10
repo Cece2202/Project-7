@@ -1,7 +1,7 @@
 const {Post} = require('../models');
 const fs = require('fs');
 
-// Add a new sauce
+// Add a new post
 exports.createPost = (req, res, next) => {
     //TODO add condition to check for present of file like in project 6 for modify sauce
     const postObject = req.file ? JSON.parse(req.body.post) : req.body;
@@ -27,31 +27,7 @@ exports.createPost = (req, res, next) => {
       );
   };
 
-// Delete a sauce
-exports.deletePost = (req, res, next) => {
-    Post.findOne({ id: req.params.id })
-        .then(post => {
-            if (!post) {
-                return res.status(404).json({
-                    error: new Error('Objet non trouvé !')
-                });
-            }
-            if (post.userId !== req.auth.userId) {
-                return res.status(401).json({
-                    error: new Error('Requête non autorisée !')
-                });
-            }
-            const filename = sauce.imageUrl.split('/images/')[1];
-            fs.unlink(`images/${filename}`, () => {
-                Post.deleteOne({ _id: req.params.id })
-                    .then(() => res.status(200).json({ message: 'Post deleted!' }))
-                    .catch(error => res.status(400).json({ error }));
-            });
-        })
-        .catch(error => res.status(500).json({ error }));
-};
-
-// Get all sauces
+// Get all posts
 exports.getAllPosts = async (req, res, next) => {
     try {
       const posts = await Post.findAll({
@@ -64,7 +40,7 @@ exports.getAllPosts = async (req, res, next) => {
     }
   };
 
-// Get one sauce
+// Get one post
 exports.getOnePost = async (req, res, next) => {
     try {
       const post = await Post.findOne({ where: { id: req.params.id } });
@@ -79,49 +55,34 @@ exports.getOnePost = async (req, res, next) => {
   };
 
 // Mark as Read
-// router.patch("/:id/read", auth, async (req, res) => {
-//     try {
-//       const post = await postModels.findByIdAndUpdate(req.params.id, { isRead: true }, { new: true });
-//       res.json(post);
-//     } catch (err) {
-//       res.status(500).json({ error: "Error marking post as read" });
-//     }
-//   });
+exports.markAsRead = async (req, res) => {
+  const userId = req.body.userId; // Extract user ID from the request body
+  const postId = req.params.id;   // Extract post ID from the request params
 
-// Handle liking or disliking a sauce
-// exports.likePost = (req, res, next) => {
-//     const userId = req.body.userId;
-//     const like = req.body.like; // 1 for like, -1 for dislike, 0 for undo
+  try {
+    // Find the post by ID
+    const post = await Post.findOne({ where: { id: postId } });
 
-//     Post.findOne({ _id: req.params.id })
-//         .then(post => {
-//             if (like === 1) {
-//                 // User is liking the sauce
-//                 if (!post.usersLiked.includes(userId)) {
-//                     post.usersLiked.push(userId);
-//                     post.likes += 1;
-//                 }
-//             } else if (like === -1) {
-//                 // User is disliking the sauce
-//                 if (!post.usersDisliked.includes(userId)) {
-//                     post.usersDisliked.push(userId);
-//                     post.dislikes += 1;
-//                 }
-//             } else if (like === 0) {
-//                 // User is undoing a like or dislike
-//                 if (post.usersLiked.includes(userId)) {
-//                     post.usersLiked = post.usersLiked.filter(user => user !== userId);
-//                     post.likes -= 1;
-//                 } else if (sauce.usersDisliked.includes(userId)) {
-//                     post.usersDisliked = post.usersDisliked.filter(user => user !== userId);
-//                     post.dislikes -= 1;
-//                 }
-//             }
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
 
-//             // Save the updated sauce
-//             post.save()
-//                 .then(() => res.status(200).json({ message: 'Post updated successfully!' }))
-//                 .catch(error => res.status(400).json({ error }));
-//         })
-//         .catch(error => res.status(404).json({ error }));
-// };
+    let reads = Array.isArray(post.reads) ? post.reads : [];
+    const userId = Number(req.auth.userId);
+
+    if (!reads.includes(userId)) {
+      reads.push(userId);
+      await Post.update(
+        { reads: reads },
+        { 
+          where: { id: req.params.id },
+          returning: true
+        }
+      );
+    }
+
+    res.status(200).json({ message: 'Post marked as read' });
+  } catch (error) {
+    res.status(500).json({ error: 'Server error' });
+  }
+};
