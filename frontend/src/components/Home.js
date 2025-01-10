@@ -6,6 +6,8 @@ import "../styles/Home.css";
 
 const Home = () => {
   const [posts, setPosts] = useState([]);
+  const userId = localStorage.getItem("userId");
+
 
   useEffect(() => {
     fetchTrendingPosts();
@@ -44,15 +46,15 @@ const Home = () => {
           {posts.length > 0 ? (
             posts.map((post) => (
               <div key={post._id} className="post-card">
-                <h3>{post.title}</h3>
-                <small className="post-author">By: {post.user?.name}</small>
-                <p className="post-content">{post.content.substring(0, 100)}...</p>
-                {post.media && <img src={post.media} alt="Post" className="post-image" />}
-                <Link to={`/posts/${post.id}`} className="post-link">
-                    
+                  <h3>{post.title}</h3>
+                  {/* <small className="post-author">By: {post.user?.name}</small> */}
+                  <p className="post-content">{post.content.substring(0, 100)}...</p>
+                  {post.media && <img src={post.media} alt="Post" className="post-image" />}
+                  {post.reads.includes(userId) && <span className="read-badge">Read</span>}
+                  <Link to={`/posts/${post.id}`} className="post-link">
                     <p>Read More...</p>
-                </Link>
-              </div>
+                  </Link>
+                </div>
             ))
           ) : (
             <p>No posts yet. Be the first to share something!</p>

@@ -13,15 +13,31 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("userId"); // Remove user ID
     navigate("/login");
   };
 
   const handleHome = () => {
+    setIsLoggedIn(false);
     navigate("/");
   };
 
   const handleForum = () => {
+    setIsLoggedIn(false);
     navigate("/forum");
+  };
+
+  const handleProfile = () => {
+    setIsLoggedIn(false);
+    navigate("/profile");
+  };
+
+  const handleSignup = () => {
+    navigate("/signup");
+  };
+
+  const handleLogin = () => {
+    navigate("/login");
   };
 
   return (
@@ -32,13 +48,14 @@ const Navbar = () => {
           {isLoggedIn ? (
             <>
               <li><button onClick={handleHome}>Home</button></li>
-              <li><button onClick={handleLogout}>Logout</button></li>
               <li><button onClick={handleForum}>Forum</button></li>
+              <li><button onClick={handleProfile}>Profile</button></li>
+              <li><button onClick={handleLogout}>Logout</button></li>
             </>
           ) : (
             <>
-              <li><Link to="/signup">Signup</Link></li>
-              <li><Link to="/login">Login</Link></li>
+              <li><button onClick={handleSignup}>Signup</button></li>
+              <li><button onClick={handleLogin}>Login</button></li>
             </>
           )}
         </div>
