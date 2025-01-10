@@ -14,11 +14,22 @@ const PostDetails = () => {
         const token = localStorage.getItem('token');
         console.log(token)
 
-        const response = await axios.get(`http://localhost:3000/api/posts/${postId}`, {
+        const response = await axios.get(`http://localhost:3000/api/posts/${postId}`,{
           headers: {
             Authorization: `Bearer ${token}`
           }
         })
+        setPost(response.data);
+
+        // Mark the post as read
+        await axios.post(
+          `http://localhost:3000/api/posts/${postId}/read`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
         setPost(response.data);
       } catch (err) {
         setError("Failed to load post details. Please try again.");
