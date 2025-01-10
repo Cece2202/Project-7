@@ -56,7 +56,7 @@ exports.getOnePost = async (req, res, next) => {
 
 // Mark as Read
 exports.markAsRead = async (req, res) => {
-  const userId = req.body.userId; // Extract user ID from the request body
+  // const userId = req.body.userId; // Extract user ID from the request body
   const postId = req.params.id;   // Extract post ID from the request params
 
   try {
