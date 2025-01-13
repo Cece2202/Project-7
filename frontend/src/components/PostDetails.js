@@ -10,29 +10,26 @@ const PostDetails = () => {
 
   useEffect(() => {
     const fetchPostDetails = async () => {
+      const token = localStorage.getItem('token');
+      const userId = Number(localStorage.getItem('userId'));
+
       try {
-        const token = localStorage.getItem('token');
-        console.log(token)
-
-        const response = await axios.get(`http://localhost:3000/api/posts/${postId}`,{
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
+        const response = await axios.get(`http://localhost:3000/api/posts/${postId}`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
         setPost(response.data);
 
-        // Mark the post as read
-        await axios.post(
-          `http://localhost:3000/api/posts/${postId}/read`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-        setPost(response.data);
+        if (!response.data.reads?.includes(userId)) {
+          await axios.post(`http://localhost:3000/api/posts/${postId}/read`, {}, {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          setPost(prevPost => ({
+            ...prevPost,
+            reads: [...(prevPost.reads || []), userId]
+          }));
+        }
       } catch (err) {
-        setError("Failed to load post details. Please try again.");
+        setError("Failed to load post details");
       }
     };
 
@@ -44,26 +41,50 @@ const PostDetails = () => {
 
     const fileExtension = mediaUrl.split(".").pop().toLowerCase();
     if (["jpg", "jpeg", "png"].includes(fileExtension)) {
-      return <img src={mediaUrl} alt={post.title} />;
+      return (
+        <div className="post-media">
+          <img src={mediaUrl} alt={post.title} />
+        </div>
+      );
     } else if (["mp4"].includes(fileExtension)) {
-      return <video src={mediaUrl} controls />;
+      return (
+        <div className="post-media">
+          <video controls>
+            <source src={mediaUrl} type={`video/${fileExtension}`} />
+            Your browser does not support video playback.
+          </video>
+        </div>
+      );
     } else if (["mp3"].includes(fileExtension)) {
-      return <audio src={mediaUrl} controls />;
-    } else {
-      return null;
+      return (
+        <div className="post-media">
+          <audio controls>
+            <source src={mediaUrl} type={`audio/${fileExtension}`} />
+            Your browser does not support audio playback.
+          </audio>
+        </div>
+      );
     }
+    return null;
   };
-  //TODO update display of media for video and audio
+
+  if (error) {
+    return <div className="error-message">{error}</div>;
+  }
+
+  if (!post) {
+    return <div className="post-details-container">Loading...</div>;
+  }
+
   return (
     <div className="post-details-container">
-      {error && <p className="error-message">{error}</p>}
-      {post && (
-        <div className="post-details">
-          <h1>{post.title}</h1>
-          <p>{post.content}</p>
-          {renderMedia(post.mediaUrl)}
-        </div>
-      )}
+      <article className="post-details">
+        <h1>{post.title}</h1>
+      </article>
+      {renderMedia(post.mediaUrl)}
+      <article className="post-details">
+        <div className="post-content">{post.content}</div>
+      </article>
     </div>
   );
 };

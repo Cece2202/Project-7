@@ -3,7 +3,6 @@ const fs = require('fs');
 
 // Add a new post
 exports.createPost = (req, res, next) => {
-    //TODO add condition to check for present of file like in project 6 for modify sauce
     const postObject = req.file ? JSON.parse(req.body.post) : req.body;
 
     // Create a new Post object

@@ -10,11 +10,6 @@ const Signup = () => {
   const [message, setMessage] = useState();
   const navigate = useNavigate(); // Initialize useNavigate
 
-
-  // const handleChange = (e) => {
-  //   setFormData({ ...formData, [e.target.name]: e.target.value });
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -1,28 +1,14 @@
 const express = require('express');
 const path = require('path');
-// const mongoose = require('mongoose');
-// const cors = require('cors'); // Import cors middleware
 
 
 const userRoutes = require('./routes/user')
-// const sauceRoutes = require('./routes/sauce');
-
 
 const app = express();
-
-// Enable CORS
-// app.use(cors({
-//   origin: 'http://localhost:4200' // Allow requests from this origin
-// }));
 
 app.use(express.json());
 
 require('dotenv').config();
-
-// Serve images statically
-// app.use('/images', express.static(path.join(__dirname, 'images')));
-// app.use('/api/auth', userRoutes);
-// app.use('/api/sauces', sauceRoutes);
 
 
 app.use((req, res, next) => {
@@ -31,15 +17,6 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
   next();
 });
-
-// mongoose.connect(`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.x1erk.mongodb.net/test?retryWrites=true`)
-//   .then(() => {
-//     console.log('Successfully connected to MongoDB Atlas!');
-//   })
-//   .catch((error) => {
-//     console.log('Unable to connect to MongoDB Atlas!');
-//     console.error(error);
-//   });
 
 // Static route to serve uploaded images
 app.use('/media', express.static(path.join(__dirname, 'media')));

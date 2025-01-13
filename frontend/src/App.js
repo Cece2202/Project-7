@@ -1,19 +1,20 @@
-// import logo from '../src/assets/icon.png'
-// import Banner from './components/Banner'
-import React, {useState, useEffect} from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Signup from '../src/components/Signup';
 import Login from '../src/components/Login';
 import Home from './components/Home';
 import Forum from './components/Forum';
 import PostDetails from './components/PostDetails';
+import ProtectedRoute from "./components/ProtectedRoutes";
+import Profile from './components/Profile';
+
 
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Check login state on component mount
+  // // Check login state on component mount
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsLoggedIn(!!token);
@@ -30,11 +31,30 @@ const App = () => {
     <Router>
       <Navbar isLoggedIn={isLoggedIn} onLogout={handleLogout} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/forum" element={<Forum />} />
-        <Route path="/posts/:postId" element={<PostDetails />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={
+          isLoggedIn ? <Home /> : <Navigate to="/login" />
+        } />
+        <Route path="/forum" element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <Forum />
+          </ProtectedRoute>
+        } />
+        <Route path="/profile" element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <Profile />
+          </ProtectedRoute>
+        } />
+        <Route path="/posts/:postId" element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <PostDetails />
+          </ProtectedRoute>
+        } />
+        <Route path="/signup" element={
+          isLoggedIn ? <Navigate to="/" /> : <Signup />
+        } />
+        <Route path="/login" element={
+          isLoggedIn ? <Navigate to="/" /> : <Login />
+        } />
       </Routes>
     </Router>
   );
