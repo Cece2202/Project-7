@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate for redire
 import "../styles/Signup.css";
 
 const Signup = () => {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [message, setMessage] = useState();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
