@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../styles/Login.css";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 
 
 function Login() {
 
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
-    const [message, setMessage] = useState();
-    const navigate = useNavigate(); // Initialize useNavigate
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [error, setError] = useState("");
 
 
 
@@ -23,44 +21,45 @@ function Login() {
             localStorage.setItem("userId", JSON.stringify(userId));
             localStorage.setItem("token", token);
 
-            setMessage(response.data.message);
-            navigate("/"); // Redirect to the home page
+            setError(response.data.message);
+            window.location.assign("/"); 
+
         } catch (error) {
-            setMessage(error.response?.data?.error || 'Invalid login credentials. Please try again.');
+            setError(error.response?.data?.error || 'Invalid login credentials. Please try again.');
         }
     };
 
 
 
     return (
-        <div>
-            <form action="" id="login" method="post" onSubmit={handleSubmit}>
+        <div className="login-container">
+            <form onSubmit={handleSubmit}>
                 <h1>Login</h1>
-                <p className="item">
-                    <label for="email"> Email </label>
+                {error && <div className="error-message">{error}</div>}
+                <div className="form-group">
+                    <label htmlFor="email">Email</label>
                     <input
                         type="email"
-                        name="email"
                         id="email"
                         value={email}
-                        onChange={e => setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
                     />
-                </p>
-                <p className="item">
-                    <label for="password"> Password </label>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Password</label>
                     <input
                         type="password"
-                        name="password"
                         id="password"
                         value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
                     />
-                </p>
+                </div>
                 <button type="submit">Login</button>
             </form>
-            {message && <p>{"Invalid login credentials. Please try again."}</p>}
         </div>
-    )
+    );
 }
 
 export default Login;

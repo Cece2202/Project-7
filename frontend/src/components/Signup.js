@@ -15,9 +15,7 @@ const Signup = () => {
     try {
       const response = await axios.post('http://localhost:3000/api/auth/signup', { name, email, password });
       setMessage(response.data.message);
-      setTimeout(() => {
-        navigate("/login"); // Redirect to login page
-      }, 2000); // Add a slight delay for user feedback
+      navigate("/login"); // Redirect to login page
     } catch (error) {
       setMessage(error.response?.data?.error || 'Something went wrong');
     }

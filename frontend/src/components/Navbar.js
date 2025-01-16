@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css"; // Add this line to import the CSS file
+import logo from "../assets/icon.png";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -12,50 +14,29 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("userId"); // Remove user ID
-    navigate("/login");
-  };
-
-  const handleHome = () => {
-    setIsLoggedIn(false);
-    navigate("/");
-  };
-
-  const handleForum = () => {
-    setIsLoggedIn(false);
-    navigate("/forum");
-  };
-
-  const handleProfile = () => {
-    setIsLoggedIn(false);
-    navigate("/profile");
-  };
-
-  const handleSignup = () => {
-    navigate("/signup");
-  };
-
-  const handleLogin = () => {
-    navigate("/login");
+    localStorage.clear();
+    window.location.href = '/login'; // Force page reload
   };
 
   return (
     <nav className="navbar">
       <div className="container">
-        <Link className="navbar-brand" to="/">9Gang</Link>
+        {/* Logo and Brand */}
+        <Link className="navbar-brand" to="/">
+          <img src={logo} alt="9Gang Logo" className="navbar-logo" />
+          <span className="brand-text">Groupomania</span>
+        </Link>
         <div className="navbar-nav">
           {isLoggedIn ? (
             <>
-              <li><button onClick={handleHome}>Home</button></li>
-              <li><button onClick={handleForum}>Forum</button></li>
-              <li><button onClick={handleProfile}>Profile</button></li>
-              <li><button onClick={handleLogout}>Logout</button></li>
+              <li><button onClick={() => navigate("/")}>HOME</button></li>
+              <li><button onClick={() => navigate("/profile")}>PROFILE</button></li>
+              <li><button onClick={handleLogout}>LOGOUT</button></li>
             </>
           ) : (
             <>
-              <li><button onClick={handleSignup}>Signup</button></li>
-              <li><button onClick={handleLogin}>Login</button></li>
+              <li><button onClick={() => navigate("/signup")}>SIGNUP</button></li>
+              <li><button onClick={() => navigate("/login")}>LOGIN</button></li>
             </>
           )}
         </div>
